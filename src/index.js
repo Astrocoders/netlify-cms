@@ -1,6 +1,7 @@
 import React from 'react';
 import bootstrap from './bootstrap';
 import registry from 'Lib/registry';
+import * as searchActions from 'Actions/search'
 import createReactClass from 'create-react-class';
 
 /**
@@ -22,4 +23,4 @@ if (typeof window !== 'undefined') {
   window.h = window.h || React.createElement;
 }
 
-export { registry as default, bootstrap as init };
+export { registry as default, bootstrap as init, searchActions };

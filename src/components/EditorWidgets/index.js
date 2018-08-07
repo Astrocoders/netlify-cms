@@ -25,6 +25,8 @@ import ObjectControl from './Object/ObjectControl';
 import ObjectPreview from './Object/ObjectPreview';
 import RelationControl from './Relation/RelationControl';
 import RelationPreview from './Relation/RelationPreview';
+import RelationSelectControl from './RelationSelect/RelationSelectControl';
+import RelationSelectPreview from './RelationSelect/RelationSelectPreview';
 import BooleanControl from './Boolean/BooleanControl';
 
 
@@ -40,5 +42,6 @@ registerWidget('datetime', DateTimeControl, DateTimePreview);
 registerWidget('select', SelectControl, SelectPreview);
 registerWidget('object', ObjectControl, ObjectPreview);
 registerWidget('relation', RelationControl, RelationPreview);
+registerWidget('relationSelect', RelationSelectControl, RelationSelectPreview);
 registerWidget('boolean', BooleanControl);
 registerWidget('unknown', UnknownControl, UnknownPreview);

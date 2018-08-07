@@ -78,6 +78,7 @@ collections: # A list of collections the CMS should be able to edit
         searchFields: ["title", "body"]
         valueField: "title"
       - {label: "Title", name: "title", widget: "string"}
+      - {label: "Another", name: "another", widget: "relationSelect", collection: "posts", valueField: title, searchFields: ["title"], displayFields: ["title"]}
       - {label: "Boolean", name: "boolean", widget: "boolean", default: true}
       - {label: "Text", name: "text", widget: "text"}
       - {label: "Number", name: "number", widget: "number"}
