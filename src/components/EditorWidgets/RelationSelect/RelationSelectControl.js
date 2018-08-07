@@ -62,7 +62,7 @@ class RelationControl extends React.Component {
         isLoading={this.state.isLoading}
         onFocus={setActiveStyle}
         onBlur={setInactiveStyle}
-        inputValue={value}
+        value={{ value, label: value }}
       />
     )
   }
