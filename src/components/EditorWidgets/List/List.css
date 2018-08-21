@@ -41,7 +41,7 @@
   line-height: 1;
 }
 
-.nc-listControl-listCollapseToggleButton{
+.nc-listControl-listCollapseToggleButton {
   padding: 4px;
   background-color: transparent;
   color: inherit;
@@ -82,6 +82,7 @@
   & .nc-listControl-objectLabel {
     display: block;
   }
+
   & .nc-listControl-objectControl {
     display: none;
   }

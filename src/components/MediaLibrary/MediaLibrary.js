@@ -1,42 +1,45 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { orderBy, get, isEmpty, map } from 'lodash';
-import c from 'classnames';
-import fuzzy from 'fuzzy';
-import Waypoint from 'react-waypoint';
-import { Modal, FileUploadButton } from 'UI';
-import { resolvePath, fileExtension } from 'Lib/pathHelper';
-import { changeDraftField } from 'Actions/entries';
+import React from 'react'
+import { connect } from 'react-redux'
+import { orderBy, get, isEmpty, map } from 'lodash'
+import c from 'classnames'
+import fuzzy from 'fuzzy'
+import Waypoint from 'react-waypoint'
+import { Modal, FileUploadButton } from 'UI'
+import { resolvePath, fileExtension } from 'Lib/pathHelper'
+import { changeDraftField } from 'Actions/entries'
 import {
   loadMedia as loadMediaAction,
   persistMedia as persistMediaAction,
   deleteMedia as deleteMediaAction,
   insertMedia as insertMediaAction,
   closeMediaLibrary as closeMediaLibraryAction,
-} from 'Actions/mediaLibrary';
-import { Icon } from 'UI';
+} from 'Actions/mediaLibrary'
+import { Icon } from 'UI'
 
+function waterfall(promises) {
+  return promises.reduce((wfall, currentPromise) => wfall.then(currentPromise), Promise.resolve())
+}
 
 /**
  * Extensions used to determine which files to show when the media library is
  * accessed from an image insertion field.
  */
-const IMAGE_EXTENSIONS_VIEWABLE = [ 'jpg', 'jpeg', 'webp', 'gif', 'png', 'bmp', 'tiff', 'svg' ];
-const IMAGE_EXTENSIONS = [ ...IMAGE_EXTENSIONS_VIEWABLE ];
+const IMAGE_EXTENSIONS_VIEWABLE = ['jpg', 'jpeg', 'webp', 'gif', 'png', 'bmp', 'tiff', 'svg']
+const IMAGE_EXTENSIONS = [...IMAGE_EXTENSIONS_VIEWABLE]
 
 class MediaLibrary extends React.Component {
-
   /**
    * The currently selected file and query are tracked in component state as
    * they do not impact the rest of the application.
    */
   state = {
+    selectedFiles: [],
     selectedFile: {},
     query: '',
-  };
+  }
 
   componentDidMount() {
-    this.props.loadMedia();
+    this.props.loadMedia()
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,13 +48,13 @@ class MediaLibrary extends React.Component {
      * because, when doing so on close, the state is cleared while the media
      * library is still fading away.
      */
-    const isOpening = !this.props.isVisible && nextProps.isVisible;
+    const isOpening = !this.props.isVisible && nextProps.isVisible
     if (isOpening) {
-      this.setState({ selectedFile: {}, query: '' });
+      this.setState({ selectedFile: {}, query: '', selectedFiles: [] })
     }
 
-    if (isOpening && (this.props.privateUpload !== nextProps.privateUpload)) {
-      this.props.loadMedia({ privateUpload: nextProps.privateUpload });
+    if (isOpening && this.props.privateUpload !== nextProps.privateUpload) {
+      this.props.loadMedia({ privateUpload: nextProps.privateUpload })
     }
   }
 
@@ -60,51 +63,58 @@ class MediaLibrary extends React.Component {
    */
   filterImages = (files = []) => {
     return files.filter(file => {
-      const ext = fileExtension(file.name).toLowerCase();
-      return IMAGE_EXTENSIONS.includes(ext);
-    });
-  };
+      const ext = fileExtension(file.name).toLowerCase()
+      return IMAGE_EXTENSIONS.includes(ext)
+    })
+  }
 
   /**
    * Transform file data for table display.
    */
   toTableData = files => {
-    const tableData = files && files.map(({ key, name, size, queryOrder, url, urlIsPublicPath }) => {
-      const ext = fileExtension(name).toLowerCase();
-      return {
-        key,
-        name,
-        type: ext.toUpperCase(),
-        size,
-        queryOrder,
-        url,
-        urlIsPublicPath,
-        isImage: IMAGE_EXTENSIONS.includes(ext),
-        isViewableImage: IMAGE_EXTENSIONS_VIEWABLE.includes(ext),
-      };
-    });
+    const tableData =
+      files &&
+      files.map(({ key, name, size, queryOrder, url, urlIsPublicPath }) => {
+        const ext = fileExtension(name).toLowerCase()
+        return {
+          key,
+          name,
+          type: ext.toUpperCase(),
+          size,
+          queryOrder,
+          url,
+          urlIsPublicPath,
+          isImage: IMAGE_EXTENSIONS.includes(ext),
+          isViewableImage: IMAGE_EXTENSIONS_VIEWABLE.includes(ext),
+        }
+      })
 
     /**
      * Get the sort order for use with `lodash.orderBy`, and always add the
      * `queryOrder` sort as the lowest priority sort order.
      */
-    const { sortFields } = this.state;
-    const fieldNames = map(sortFields, 'fieldName').concat('queryOrder');
-    const directions = map(sortFields, 'direction').concat('asc');
-    return orderBy(tableData, fieldNames, directions);
-  };
+    const { sortFields } = this.state
+    const fieldNames = map(sortFields, 'fieldName').concat('queryOrder')
+    const directions = map(sortFields, 'direction').concat('asc')
+    return orderBy(tableData, fieldNames, directions)
+  }
 
   handleClose = () => {
-    this.props.closeMediaLibrary();
-  };
+    this.props.closeMediaLibrary()
+  }
 
   /**
    * Toggle asset selection on click.
    */
   handleAssetClick = asset => {
-    const selectedFile = this.state.selectedFile.key === asset.key ? {} : asset;
-    this.setState({ selectedFile });
-  };
+    const index = this.state.selectedFiles.findIndex(file => file.key === asset.key)
+    this.setState({
+      selectedFiles:
+        index === -1
+          ? [...this.state.selectedFiles, asset]
+          : this.state.selectedFiles.filter(file => file.key !== asset.key),
+    })
+  }
 
   /**
    * Upload a file.
@@ -115,54 +125,63 @@ class MediaLibrary extends React.Component {
      * get the file for upload, and retain the synthetic event for access after
      * the asynchronous persist operation.
      */
-    event.stopPropagation();
-    event.preventDefault();
-    event.persist();
-    const { persistMedia, privateUpload } = this.props;
-    const { files: fileList } = event.dataTransfer || event.target;
-    const files = [...fileList];
-    const file = files[0];
+    event.stopPropagation()
+    event.preventDefault()
+    event.persist()
+    const { persistMedia, privateUpload } = this.props
+    const { files: fileList } = event.dataTransfer || event.target
+    const files = [...fileList]
 
-    await persistMedia(file, { privateUpload });
+    await waterfall(files.map(file => async () => persistMedia(file, { privateUpload })))
 
-    event.target.value = null;
+    event.target.value = null
 
-    this.scrollToTop();
-  };
+    this.scrollToTop()
+  }
 
   /**
    * Stores the public path of the file in the application store, where the
    * editor field that launched the media library can retrieve it.
    */
-  handleInsert = () => {
-    const { selectedFile } = this.state;
-    const { name, url, urlIsPublicPath } = selectedFile;
-    const { insertMedia, publicFolder } = this.props;
-    const publicPath = urlIsPublicPath ? url : resolvePath(name, publicFolder);
-    insertMedia(publicPath);
-    this.handleClose();
-  };
+  handleInsert = async () => {
+    const { selectedFiles } = this.state
+    const { insertMedia, publicFolder } = this.props
+
+    await waterfall(
+      selectedFiles.map(selectedFile => async () => {
+        const { name, url, urlIsPublicPath } = selectedFile
+        const publicPath = urlIsPublicPath ? url : resolvePath(name, publicFolder)
+        return insertMedia(publicPath)
+      }),
+    )
+
+    this.handleClose()
+  }
 
   /**
    * Removes the selected file from the backend.
    */
-  handleDelete = () => {
-    const { selectedFile } = this.state;
-    const { files, deleteMedia, privateUpload } = this.props;
+  handleDelete = async () => {
+    const { selectedFiles } = this.state
+    const { files, deleteMedia, privateUpload } = this.props
     if (!window.confirm('Are you sure you want to delete selected media?')) {
-      return;
+      return
     }
-    const file = files.find(file => selectedFile.key === file.key);
-    deleteMedia(file, { privateUpload })
-      .then(() => {
-        this.setState({ selectedFile: {} });
-      });
-  };
+
+    await waterfall(
+      selectedFiles.map(selectedFile => async () => {
+        const file = files.find(file => selectedFile.key === file.key)
+        return deleteMedia(file, { privateUpload })
+      }),
+    )
+
+    this.setState({ selectedFile: {}, selectedFiles: [] })
+  }
 
   handleLoadMore = () => {
-    const { loadMedia, dynamicSearchQuery, page, privateUpload } = this.props;
-    loadMedia({ query: dynamicSearchQuery, page: page + 1, privateUpload });
-  };
+    const { loadMedia, dynamicSearchQuery, page, privateUpload } = this.props
+    loadMedia({ query: dynamicSearchQuery, page: page + 1, privateUpload })
+  }
 
   /**
    * Executes media library search for implementations that support dynamic
@@ -171,24 +190,24 @@ class MediaLibrary extends React.Component {
    * the GitHub backend, search is in-memory and occurs as the query is typed,
    * so this handler has no impact.
    */
-  handleSearchKeyDown = async (event) => {
-    const { dynamicSearch, loadMedia, privateUpload } = this.props;
+  handleSearchKeyDown = async event => {
+    const { dynamicSearch, loadMedia, privateUpload } = this.props
     if (event.key === 'Enter' && dynamicSearch) {
       await loadMedia({ query: this.state.query, privateUpload })
-      this.scrollToTop();
+      this.scrollToTop()
     }
-  };
+  }
 
   scrollToTop = () => {
-    this.scrollContainerRef.scrollTop = 0;
+    this.scrollContainerRef.scrollTop = 0
   }
 
   /**
    * Updates query state as the user types in the search field.
    */
   handleSearchChange = event => {
-    this.setState({ query: event.target.value });
-  };
+    this.setState({ query: event.target.value })
+  }
 
   /**
    * Filters files that do not match the query. Not used for dynamic search.
@@ -199,14 +218,14 @@ class MediaLibrary extends React.Component {
      * potential matches, so we strip them all out internally before running the
      * query.
      */
-    const strippedQuery = query.replace(/ /g, '');
-    const matches = fuzzy.filter(strippedQuery, files, { extract: file => file.name });
+    const strippedQuery = query.replace(/ /g, '')
+    const matches = fuzzy.filter(strippedQuery, files, { extract: file => file.name })
     const matchFiles = matches.map((match, queryIndex) => {
-      const file = files[match.index];
-      return { ...file, queryIndex };
-    });
-    return matchFiles;
-  };
+      const file = files[match.index]
+      return { ...file, queryIndex }
+    })
+    return matchFiles
+  }
 
   render() {
     const {
@@ -223,35 +242,35 @@ class MediaLibrary extends React.Component {
       page,
       isPaginating,
       privateUpload,
-    } = this.props;
-    const { query, selectedFile } = this.state;
-    const filteredFiles = forImage ? this.filterImages(files) : files;
-    const queriedFiles = (!dynamicSearch && query) ? this.queryFilter(query, filteredFiles) : filteredFiles;
-    const tableData = this.toTableData(queriedFiles);
-    const hasFiles = files && !!files.length;
-    const hasFilteredFiles = filteredFiles && !!filteredFiles.length;
-    const hasSearchResults = queriedFiles && !!queriedFiles.length;
-    const hasMedia = hasSearchResults;
-    const shouldShowEmptyMessage = !hasMedia;
-    const emptyMessage = (isLoading && !hasMedia && 'Loading...')
-      || (dynamicSearchActive && 'No results.')
-      || (!hasFiles && 'No assets found.')
-      || (!hasFilteredFiles && 'No images found.')
-      || (!hasSearchResults && 'No results.');
-    const hasSelection = hasMedia && !isEmpty(selectedFile);
-    const shouldShowButtonLoader = isPersisting || isDeleting;
+    } = this.props
+    const { query, selectedFile, selectedFiles } = this.state
+    const filteredFiles = forImage ? this.filterImages(files) : files
+    const queriedFiles = !dynamicSearch && query ? this.queryFilter(query, filteredFiles) : filteredFiles
+    const tableData = this.toTableData(queriedFiles)
+    const hasFiles = files && !!files.length
+    const hasFilteredFiles = filteredFiles && !!filteredFiles.length
+    const hasSearchResults = queriedFiles && !!queriedFiles.length
+    const hasMedia = hasSearchResults
+    const shouldShowEmptyMessage = !hasMedia
+    const emptyMessage =
+      (isLoading && !hasMedia && 'Loading...') ||
+      (dynamicSearchActive && 'No results.') ||
+      (!hasFiles && 'No assets found.') ||
+      (!hasFilteredFiles && 'No images found.') ||
+      (!hasSearchResults && 'No results.')
+    const hasSelection = hasMedia && !isEmpty(selectedFiles)
+    const shouldShowButtonLoader = isPersisting || isDeleting
 
     return (
       <Modal
         isOpen={isVisible}
         onClose={this.handleClose}
-        className={c('nc-mediaLibrary-dialog', { 'nc-mediaLibrary-dialogPrivate': privateUpload })}
-      >
+        className={c('nc-mediaLibrary-dialog', { 'nc-mediaLibrary-dialogPrivate': privateUpload })}>
         <div className="nc-mediaLibrary-top">
           <div>
             <div className="nc-mediaLibrary-header">
               <button className="nc-mediaLibrary-close" onClick={this.handleClose}>
-                <Icon type="close"/>
+                <Icon type="close" />
               </button>
               <h1 className="nc-mediaLibrary-title">
                 {privateUpload ? 'Private ' : null}
@@ -259,7 +278,7 @@ class MediaLibrary extends React.Component {
               </h1>
             </div>
             <div className="nc-mediaLibrary-search">
-              <Icon type="search" size="small"/>
+              <Icon type="search" size="small" />
               <input
                 className=""
                 value={query}
@@ -272,76 +291,71 @@ class MediaLibrary extends React.Component {
           </div>
           <div className="nc-mediaLibrary-actionContainer">
             <FileUploadButton
-              className={`nc-mediaLibrary-uploadButton ${shouldShowButtonLoader ? 'nc-mediaLibrary-uploadButton-disabled' : ''}`}
+              className={`nc-mediaLibrary-uploadButton ${
+                shouldShowButtonLoader ? 'nc-mediaLibrary-uploadButton-disabled' : ''
+              }`}
               label={isPersisting ? 'Uploading...' : 'Upload new'}
               imagesOnly={forImage}
               onChange={this.handlePersist}
               disabled={shouldShowButtonLoader}
+              multiple
             />
             <div className="nc-mediaLibrary-lowerActionContainer">
               <button
                 className="nc-mediaLibrary-deleteButton"
                 onClick={this.handleDelete}
-                disabled={shouldShowButtonLoader || !hasSelection}
-              >
+                disabled={shouldShowButtonLoader || !hasSelection}>
                 {isDeleting ? 'Deleting...' : 'Delete selected'}
               </button>
-              { !canInsert ? null :
-                <button
-                  onClick={this.handleInsert}
-                  disabled={!hasSelection}
-                  className="nc-mediaLibrary-insertButton"
-                >
+              {!canInsert ? null : (
+                <button onClick={this.handleInsert} disabled={!hasSelection} className="nc-mediaLibrary-insertButton">
                   Choose selected
                 </button>
-              }
+              )}
             </div>
           </div>
         </div>
-        {
-          shouldShowEmptyMessage
-            ? <div className="nc-mediaLibrary-emptyMessage"><h1>{emptyMessage}</h1></div>
-            : null
-        }
+        {shouldShowEmptyMessage ? (
+          <div className="nc-mediaLibrary-emptyMessage">
+            <h1>{emptyMessage}</h1>
+          </div>
+        ) : null}
         <div className="nc-mediaLibrary-cardGrid-container" ref={ref => (this.scrollContainerRef = ref)}>
           <div className="nc-mediaLibrary-cardGrid">
-            {
-              tableData.map((file, idx) =>
+            {tableData.map((file, idx) => {
+              return (
                 <div
                   key={file.key}
-                  className={c('nc-mediaLibrary-card', { 'nc-mediaLibrary-card-selected': selectedFile.key === file.key })}
+                  className={c('nc-mediaLibrary-card', {
+                    'nc-mediaLibrary-card-selected': selectedFiles.findIndex(asset => asset.key === file.key) !== -1,
+                  })}
                   onClick={() => this.handleAssetClick(file)}
-                  tabIndex="-1"
-                >
+                  tabIndex="-1">
                   <div className="nc-mediaLibrary-cardImage-container">
-                    {
-                      file.isViewableImage
-                        ? <img src={file.url} className="nc-mediaLibrary-cardImage"/>
-                        : <div className="nc-mediaLibrary-cardImage"/>
-                    }
+                    {file.isViewableImage ? (
+                      <img src={file.url} className="nc-mediaLibrary-cardImage" />
+                    ) : (
+                      <div className="nc-mediaLibrary-cardImage" />
+                    )}
                   </div>
                   <p className="nc-mediaLibrary-cardText">{file.name}</p>
                 </div>
               )
-            }
-            {
-              hasNextPage
-                ? <Waypoint onEnter={() => this.handleLoadMore()}/>
-                : null
-            }
+            })}
+            {hasNextPage ? <Waypoint onEnter={() => this.handleLoadMore()} /> : null}
           </div>
-          { isPaginating ? <h1 className="nc-mediaLibrary-paginatingMessage">Loading...</h1> : null }
+          {isPaginating ? <h1 className="nc-mediaLibrary-paginatingMessage">Loading...</h1> : null}
         </div>
       </Modal>
-    );
+    )
   }
 }
 
 const mapStateToProps = state => {
-  const { config, mediaLibrary } = state;
+  const { config, mediaLibrary } = state
   const configProps = {
     publicFolder: config.get('public_folder'),
-  };
+  }
   const mediaLibraryProps = {
     isVisible: mediaLibrary.get('isVisible'),
     canInsert: mediaLibrary.get('canInsert'),
@@ -357,9 +371,9 @@ const mapStateToProps = state => {
     page: mediaLibrary.get('page'),
     hasNextPage: mediaLibrary.get('hasNextPage'),
     isPaginating: mediaLibrary.get('isPaginating'),
-  };
-  return { ...configProps, ...mediaLibraryProps };
-};
+  }
+  return { ...configProps, ...mediaLibraryProps }
+}
 
 const mapDispatchToProps = {
   loadMedia: loadMediaAction,
@@ -367,6 +381,6 @@ const mapDispatchToProps = {
   deleteMedia: deleteMediaAction,
   insertMedia: insertMediaAction,
   closeMediaLibrary: closeMediaLibraryAction,
-};
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(MediaLibrary);
+export default connect(mapStateToProps, mapDispatchToProps)(MediaLibrary)

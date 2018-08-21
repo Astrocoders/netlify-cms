@@ -42,8 +42,9 @@
 }
 
 .nc-mediaLibrary-uploadButton {
-  @apply(--buttonGray);
-  @apply(--dropShadowMain);
+  @apply (--buttonGray);
+
+  @apply (--dropShadowMain);
   margin-bottom: 0;
 
   & span {
@@ -74,25 +75,25 @@
 .nc-mediaLibrary-uploadButton,
 .nc-mediaLibrary-deleteButton,
 .nc-mediaLibrary-insertButton {
-  @apply(--button);
-  @apply(--buttonDefault);
+  @apply (--button);
+
+  @apply (--buttonDefault);
   display: inline-block;
   margin-left: 15px;
 
   &[disabled],
   &.nc-mediaLibrary-uploadButton-disabled {
-    @apply(--buttonDisabled);
+    @apply (--buttonDisabled);
   }
 }
 
 .nc-mediaLibrary-deleteButton {
-  @apply(--buttonLightRed);
+  @apply (--buttonLightRed);
 }
 
 .nc-mediaLibrary-insertButton {
-  @apply(--buttonGreen);
+  @apply (--buttonGreen);
 }
-
 
 .nc-mediaLibrary-top {
   position: relative;
@@ -100,8 +101,7 @@
   justify-content: space-between;
 
   & .nc-mediaLibrary-close {
-    @apply(--dropShadowMiddle);
-
+    @apply (--dropShadowMiddle);
     position: absolute;
     margin-right: -40px;
     left: -40px;
@@ -133,7 +133,6 @@
   & input {
     background-color: #eff0f4;
     border-radius: var(--borderRadius);
-
     font-size: 14px;
     padding: 10px 6px 10px 32px;
     width: 100%;
@@ -170,8 +169,7 @@
 .nc-mediaLibrary-cardGrid {
   display: flex;
   flex-wrap: wrap;
-
-  margin-left:  -10px;
+  margin-left: -10px;
   margin-right: -10px;
 }
 

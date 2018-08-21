@@ -2,25 +2,8 @@
   /**
    * Font Stacks
    */
-  --fontFamilyPrimary:
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Helvetica,
-    Arial,
-    sans-serif,
-    "Apple Color Emoji",
-    "Segoe UI Emoji",
-    "Segoe UI Symbol";
-
-  --fontFamilyMono:
-    'SFMono-Regular',
-    Consolas,
-    "Liberation Mono",
-    Menlo,
-    Courier,
-    monospace;
+  --fontFamilyPrimary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  --fontFamilyMono: 'SFMono-Regular', Consolas, "Liberation Mono", Menlo, Courier, monospace;
 
   /**
    * Theme Colors
@@ -41,14 +24,12 @@
   --colorPurpleLight: #f6d8ff;
   --colorTeal: #17a2b8;
   --colorTealLight: #ddf5f9;
-
   --colorStatusDraftText: var(--colorPurple);
   --colorStatusDraftBackground: var(--colorPurpleLight);
   --colorStatusReviewText: var(--colorBrown);
   --colorStatusReviewBackground: var(--colorYellow);
   --colorStatusReadyText: var(--colorGreen);
   --colorStatusReadyBackground: var(--colorGreenLight);
-
   --colorText: var(--colorGray);
   --colorTextLight: var(--colorWhite);
   --colorTextLead: var(--colorGrayDark);
@@ -60,7 +41,6 @@
   --colorButton: var(--colorGray);
   --colorButtonText: var(--colorWhite);
   --colorInputBackground: var(--colorWhite);
-
   --colorInfoText: var(--colorBlue);
   --colorInfoBackground: var(--colorBlueLight);
   --colorSuccessText: var(--colorGreen);
@@ -69,10 +49,8 @@
   --colorWarnBackground: var(--colorYellow);
   --colorErrorText: var(--colorRed);
   --colorErrorBackground: var(--colorRedLight);
-
   --textFieldBorderColor: #dfdfe3;
   --controlLabelColor: #7a8291;
-
   --topBarHeight: 56px;
   --transition: .2s ease;
   --inputPadding: 16px 20px;
@@ -84,22 +62,19 @@
   --pageMargin: 84px 18px;
 
   --dropShadow: {
-    box-shadow: 0 2px 4px 0  rgba(19, 39, 48, .12);
+    box-shadow: 0 2px 4px 0 rgba(19, 39, 48, .12);
   }
 
   --dropShadowMain: {
-    box-shadow: 0 2px 6px 0  rgba(68, 74, 87, 0.05),
-                0 1px 3px 0  rgba(68, 74, 87, 0.10);
+    box-shadow: 0 2px 6px 0 rgba(68, 74, 87, 0.05), 0 1px 3px 0 rgba(68, 74, 87, 0.10);
   }
 
   --dropShadowMiddle: {
-    box-shadow: 0 2px 6px 0  rgba(68, 74, 87, 0.15),
-                0 1px 3px 0  rgba(68, 74, 87, 0.30);
+    box-shadow: 0 2px 6px 0 rgba(68, 74, 87, 0.15), 0 1px 3px 0 rgba(68, 74, 87, 0.30);
   }
 
   --dropShadowDeep: {
-    box-shadow: 0 4px 12px 0 rgba(68, 74, 87, 0.15),
-                0 1px 3px  0 rgba(68, 74, 87, 0.25);
+    box-shadow: 0 4px 12px 0 rgba(68, 74, 87, 0.15), 0 1px 3px 0 rgba(68, 74, 87, 0.25);
   }
 
   --caretDown: {
@@ -113,7 +88,7 @@
   }
 
   --card: {
-    @apply(--dropShadowMain);
+    @apply (--dropShadowMain);
     border-radius: 5px;
     background-color: #fff;
   }
@@ -136,10 +111,8 @@
   --buttonMedium {
     height: 27px;
     line-height: 27px;
-
     font-size: 12px;
     font-weight: 600;
-
     border-radius: 3px;
     padding: 0 24px 0 14px;
   }
@@ -161,27 +134,27 @@
   }
 
   --buttonGreen {
-    background-color: #AAE31F;
+    background-color: #aae31f;
     color: #005614;
   }
 
   --buttonLightRed {
-    background-color: #FCEFEA;
-    color: #FF003B;
+    background-color: #fcefea;
+    color: #ff003b;
   }
 
   --buttonLightBlue {
-    background-color: #E8F5FE;
-    color: #3A69C7;
+    background-color: #e8f5fe;
+    color: #3a69c7;
   }
 
   --buttonLightTeal {
-    background-color: #DDF5F9;
-    color: #1195AA;
+    background-color: #ddf5f9;
+    color: #1195aa;
   }
 
   --buttonTeal {
-    background-color: #17A2B8;
+    background-color: #17a2b8;
     color: white;
   }
 
@@ -202,13 +175,13 @@
   }
 
   --textBadgeSuccess: {
-    @apply(--textBadge);
+    @apply (--textBadge);
     color: #005614;
     background-color: #caef6f;
   }
 
   --textBadgeDanger: {
-    @apply(--textBadge);
+    @apply (--textBadge);
     color: #ff003b;
     background-color: #fbe0d7;
   }
@@ -219,7 +192,7 @@
   }
 
   --cardTop: {
-    @apply(--card);
+    @apply (--card);
     width: var(--topCardWidth);
     max-width: 100%;
     padding: 18px 20px;
@@ -242,13 +215,14 @@
   }
 }
 
-*, *:before, *:after {
+*,
+*:before,
+*:after {
   box-sizing: border-box;
 }
 
 :focus {
   outline: -webkit-focus-ring-color auto 5px;
-
 }
 
 /**
@@ -257,7 +231,6 @@
 [data-whatintent="mouse"] *:focus {
   outline: none;
 }
-
 
 input {
   border: 0;
@@ -271,11 +244,18 @@ body {
   margin: 0;
 }
 
-ul, ol {
+ul,
+ol {
   padding-left: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   font-family: var(--fontFamilyPrimary);
   color: var(--colorTextLead);
   font-size: 15px;
@@ -283,7 +263,12 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 0;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 500;
 }
 
@@ -305,26 +290,26 @@ a {
 }
 
 button {
-  @apply(--button);
+  @apply (--button);
 
   &.LightBlue {
-    @apply(--buttonLightBlue);
+    @apply (--buttonLightBlue);
   }
 
   &.Teal {
-    @apply(--buttonTeal);
+    @apply (--buttonTeal);
   }
 
   &.LightTeal {
-    @apply(--buttonLightTeal);
+    @apply (--buttonLightTeal);
   }
 
   &.LightRed {
-    @apply(--buttonLightRed);
+    @apply (--buttonLightRed);
   }
 
   &.Green {
-    @apply(--buttonGreen);
+    @apply (--buttonGreen);
   }
 }
 
