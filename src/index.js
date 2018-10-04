@@ -1,7 +1,7 @@
 import CMS, { init } from './core'
 import './backends'
 import './widgets'
-import './editor'
-import './media'
+import './editor/editor-components'
+import './media/media-libraries'
 
 export { CMS as default, init }
