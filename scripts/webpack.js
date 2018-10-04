@@ -1,9 +1,9 @@
-const path = require('path');
-const webpack = require('webpack');
-const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const pkg = require(path.join(process.cwd(), 'package.json'));
+const path = require('path')
+const webpack = require('webpack')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+const pkg = require(path.join(process.cwd(), 'package.json'))
 
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === 'production'
 
 const rules = () => ({
   js: () => ({
@@ -21,15 +21,15 @@ const rules = () => ({
     exclude: [/node_modules/],
     use: 'svg-inline-loader',
   }),
-});
+})
 
 const plugins = () => {
   return {
     ignoreEsprima: () => new webpack.IgnorePlugin(/^esprima$/, /js-yaml/),
     ignoreMomentOptionalDeps: () => new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
     friendlyErrors: () => new FriendlyErrorsWebpackPlugin(),
-  };
-};
+  }
+}
 
 const stats = () => {
   if (isProduction) {
@@ -44,16 +44,16 @@ const stats = () => {
       timings: false,
       version: false,
       warnings: false,
-    };
+    }
   }
   return {
     all: false,
-  };
-};
+  }
+}
 
 const getConfig = () => ({
   mode: isProduction ? 'production' : 'development',
-  entry: './src/index.js',
+  entry: './index.js',
   output: {
     path: process.cwd(),
     filename: pkg.main,
@@ -72,17 +72,17 @@ const getConfig = () => ({
    * Exclude peer dependencies from package bundles.
    */
   externals: (context, request, cb) => {
-    const localExternals = pkg.localExternals || [];
-    const peerDeps = Object.keys(pkg.peerDependencies || {});
-    const externals = isProduction ? peerDeps : [...localExternals, ...peerDeps];
-    const isPeerDep = dep => new RegExp(`^${dep}($|/)`).test(request);
-    return externals.some(isPeerDep) ? cb(null, request) : cb();
+    const localExternals = pkg.localExternals || []
+    const peerDeps = Object.keys(pkg.peerDependencies || {})
+    const externals = isProduction ? peerDeps : [...localExternals, ...peerDeps]
+    const isPeerDep = dep => new RegExp(`^${dep}($|/)`).test(request)
+    return externals.some(isPeerDep) ? cb(null, request) : cb()
   },
   stats: stats(),
-});
+})
 
 module.exports = {
   getConfig,
   rules: rules(),
   plugins: plugins(),
-};
+}
