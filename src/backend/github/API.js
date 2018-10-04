@@ -1,6 +1,6 @@
-import { localForage } from 'utils'
 import { Base64 } from 'js-base64'
 import { uniq, initial, last, get, find, hasIn, partial, result } from 'lodash'
+import { localForage } from '../../utils'
 import { filterPromises, resolvePromiseProperties } from '../../utils'
 import { APIError, EditorialWorkflowError } from '../../utils'
 

@@ -1,30 +1,21 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { Provider } from 'react-redux';
-import { Route } from 'react-router-dom';
-import { ConnectedRouter } from 'react-router-redux';
-import history from 'Routing/history';
-import store from 'Redux';
-import { mergeConfig } from 'Actions/config';
-import { ErrorBoundary } from './components/UI';
-import App from './components/App/App';
-import './components/EditorWidgets';
-import './media/mediaLibrary';
-import 'what-input';
+import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { Route } from 'react-router-dom'
+import { ConnectedRouter } from 'react-router-redux'
+import store from './redux'
+import history from './routing/history'
+import { mergeConfig } from './actions/config'
+import { ErrorBoundary } from './components/UI'
+import App from './components/App/App'
+import './components/EditorWidgets'
+import './media/mediaLibrary'
+import 'what-input'
 
-const ROOT_ID = 'nc-root';
+const ROOT_ID = 'nc-root'
 
 function bootstrap(opts = {}) {
-  const { config } = opts;
-
-  /**
-   * Log the version number.
-   */
-  if (NETLIFY_CMS_VERSION) {
-    console.log(`netlify-cms ${NETLIFY_CMS_VERSION}`);
-  } else if (NETLIFY_CMS_CORE_VERSION) {
-    console.log(`netlify-cms-core ${NETLIFY_CMS_CORE_VERSION}`);
-  }
+  const { config } = opts
 
   /**
    * Get DOM element where app will mount.
@@ -33,18 +24,18 @@ function bootstrap(opts = {}) {
     /**
      * Return existing root if found.
      */
-    const existingRoot = document.getElementById(ROOT_ID);
+    const existingRoot = document.getElementById(ROOT_ID)
     if (existingRoot) {
-      return existingRoot;
+      return existingRoot
     }
 
     /**
      * If no existing root, create and return a new root.
      */
-    const newRoot = document.createElement('div');
-    newRoot.id = ROOT_ID;
-    document.body.appendChild(newRoot);
-    return newRoot;
+    const newRoot = document.createElement('div')
+    newRoot.id = ROOT_ID
+    document.body.appendChild(newRoot)
+    return newRoot
   }
 
   /**
@@ -53,7 +44,7 @@ function bootstrap(opts = {}) {
    * overwritten.
    */
   if (config) {
-    store.dispatch(mergeConfig(config));
+    store.dispatch(mergeConfig(config))
   }
 
   /**
@@ -67,12 +58,12 @@ function bootstrap(opts = {}) {
         </ConnectedRouter>
       </Provider>
     </ErrorBoundary>
-  );
+  )
 
   /**
    * Render application root.
    */
-  render(<Root />, getRoot());
+  render(<Root />, getRoot())
 }
 
-export default bootstrap;
+export default bootstrap

@@ -8,7 +8,7 @@ import { addAsset } from './media'
 import { sanitizeSlug } from '../lib/urlHelper'
 
 const { notifSend } = notifActions
-Î
+
 export const MEDIA_LIBRARY_OPEN = 'MEDIA_LIBRARY_OPEN'
 export const MEDIA_LIBRARY_CLOSE = 'MEDIA_LIBRARY_CLOSE'
 export const MEDIA_LIBRARY_CREATE = 'MEDIA_LIBRARY_CREATE'
