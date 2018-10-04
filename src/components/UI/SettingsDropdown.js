@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'react-emotion';
-import { Icon, Dropdown, DropdownItem, DropdownButton, colors } from 'netlify-cms-ui-default';
-import { stripProtocol } from 'Lib/urlHelper';
+import { Icon, Dropdown, DropdownItem, DropdownButton, colors } from '../../ui';
+import { stripProtocol } from '../../lib/urlHelper';
 
 const styles = {
   avatarImage: css`

@@ -3,7 +3,7 @@ import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import styled from 'react-emotion';
 import { isBoolean } from 'lodash';
-import { Toggle, ToggleBackground, colors } from 'netlify-cms-ui-default';
+import { Toggle, ToggleBackground, colors } from '../../ui';
 
 const BooleanBackground = styled(ToggleBackground)`
   background-color: ${props => (props.isActive ? colors.active : colors.textFieldBorder)};

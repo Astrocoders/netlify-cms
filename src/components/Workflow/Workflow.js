@@ -12,16 +12,16 @@ import {
   lengths,
   components,
   shadows,
-} from 'netlify-cms-ui-default';
-import { createNewEntry } from 'Actions/collections';
+} from '../../ui';
+import { createNewEntry } from '../../actions/collections';
 import {
   loadUnpublishedEntries,
   updateUnpublishedEntryStatus,
   publishUnpublishedEntry,
   deleteUnpublishedEntry,
-} from 'Actions/editorialWorkflow';
-import { selectUnpublishedEntriesByStatus } from 'Reducers';
-import { EDITORIAL_WORKFLOW, status } from 'Constants/publishModes';
+} from '../../actions/editorialWorkflow';
+import { selectUnpublishedEntriesByStatus } from '../../reducers';
+import { EDITORIAL_WORKFLOW, status } from '../../constants/publishModes';
 import WorkflowList from './WorkflowList';
 
 const WorkflowContainer = styled.div`

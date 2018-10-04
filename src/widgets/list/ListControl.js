@@ -5,14 +5,14 @@ import styled, { cx, css } from 'react-emotion';
 import { List, Map } from 'immutable';
 import { partial } from 'lodash';
 import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
-import { ObjectControl } from 'netlify-cms-widget-object';
+import { ObjectControl } from '../object';
 import {
   ListItemTopBar,
   ObjectWidgetTopBar,
   colors,
   lengths,
   components,
-} from 'netlify-cms-ui-default';
+} from '../../ui';
 
 function valueToString(value) {
   return value ? value.join(',').replace(/,([^\s]|$)/g, ', $1') : '';

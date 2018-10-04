@@ -1,7 +1,7 @@
 import GoTrue from 'gotrue-js'
 import jwtDecode from 'jwt-decode'
 import { get, pick, intersection } from 'lodash'
-import { APIError, unsentRequest } from 'utils'
+import { APIError, unsentRequest } from '../../utils'
 import { GitHubBackend } from '../github'
 import GitHubAPI from './GitHubAPI'
 import AuthenticationPage from './AuthenticationPage'

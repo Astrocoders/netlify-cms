@@ -3,9 +3,9 @@ import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import styled, { css, cx } from 'react-emotion';
 import moment from 'moment';
-import { colors, lengths } from 'netlify-cms-ui-default';
-import { status } from 'Constants/publishModes';
-import { DragSource, DropTarget, HTML5DragDrop } from 'UI';
+import { colors, lengths } from '../../ui';
+import { status } from '../../constants/publishModes';
+import { DragSource, DropTarget, HTML5DragDrop } from '../UI';
 import WorkflowCard from './WorkflowCard';
 
 const WorkflowListContainer = styled.div`

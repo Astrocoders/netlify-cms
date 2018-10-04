@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { css } from 'react-emotion';
-import { colors } from 'netlify-cms-ui-default';
+import { colors } from '../../ui';
 
 const ISSUE_URL = 'https://github.com/netlify/netlify-cms/issues/new?template=bug_report.md';
 

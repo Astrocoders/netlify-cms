@@ -1,6 +1,6 @@
-import Algolia from './providers/algolia/implementation';
-import AssetStore from './providers/assetStore/implementation';
 import { Map } from 'immutable';
+import Algolia from './algolia';
+import AssetStore from './assetStore';
 
 export function resolveIntegrations(interationsConfig, getToken) {
   let integrationInstances = Map({});

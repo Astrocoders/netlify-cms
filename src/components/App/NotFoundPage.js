@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'react-emotion';
-import { lengths } from 'netlify-cms-ui-default';
+import { lengths } from '../../ui';
 
 const NotFoundContainer = styled.div`
   margin: ${lengths.pageMargin};

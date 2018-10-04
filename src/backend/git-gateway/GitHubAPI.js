@@ -1,5 +1,5 @@
 import { API as GithubAPI } from '../github'
-import { APIError } from 'utils'
+import { APIError } from '../../utils'
 
 export default class API extends GithubAPI {
   constructor(config) {

@@ -1,17 +1,17 @@
-import cms from 'netlify-cms-core/src';
-import { StringControl, StringPreview } from 'netlify-cms-widget-string/src';
-import { NumberControl, NumberPreview } from 'netlify-cms-widget-number/src';
-import { TextControl, TextPreview } from 'netlify-cms-widget-text/src';
-import { ImageControl, ImagePreview } from 'netlify-cms-widget-image/src';
-import { FileControl, FilePreview } from 'netlify-cms-widget-file/src';
-import { DateControl, DatePreview } from 'netlify-cms-widget-date/src';
-import { DateTimeControl, DateTimePreview } from 'netlify-cms-widget-datetime/src';
-import { SelectControl, SelectPreview } from 'netlify-cms-widget-select/src';
-import { MarkdownControl, MarkdownPreview } from 'netlify-cms-widget-markdown/src';
-import { ListControl, ListPreview } from 'netlify-cms-widget-list/src';
-import { ObjectControl, ObjectPreview } from 'netlify-cms-widget-object/src';
-import { RelationControl, RelationPreview } from 'netlify-cms-widget-relation/src';
-import { BooleanControl } from 'netlify-cms-widget-boolean/src';
+import cms from '../core';
+import { StringControl, StringPreview } from './string';
+import { NumberControl, NumberPreview } from './number';
+import { TextControl, TextPreview } from './text';
+import { ImageControl, ImagePreview } from './image';
+import { FileControl, FilePreview } from './file';
+import { DateControl, DatePreview } from './date';
+import { DateTimeControl, DateTimePreview } from './datetime';
+import { SelectControl, SelectPreview } from './select';
+import { MarkdownControl, MarkdownPreview } from './markdown';
+import { ListControl, ListPreview } from './list';
+import { ObjectControl, ObjectPreview } from './object';
+import { RelationControl, RelationPreview } from './relation';
+import { BooleanControl } from './boolean';
 
 const { registerWidget } = cms;
 

@@ -1,5 +1,5 @@
-import cms from 'netlify-cms-core/src';
-import uploadcare from 'netlify-cms-media-library-uploadcare/src';
+import cms from '../core';
+import uploadcare from './media-library-uploadcare';
 
 const { registerMediaLibrary } = cms;
 

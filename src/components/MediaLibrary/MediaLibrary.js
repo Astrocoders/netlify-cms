@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { orderBy, map } from 'lodash';
 import { Map } from 'immutable';
 import fuzzy from 'fuzzy';
-import { resolvePath, fileExtension } from 'netlify-cms-lib-util';
+import { resolvePath, fileExtension } from '../../utils';
 import {
   loadMedia as loadMediaAction,
   persistMedia as persistMediaAction,
@@ -13,7 +13,7 @@ import {
   insertMedia as insertMediaAction,
   loadMediaDisplayURL as loadMediaDisplayURLAction,
   closeMediaLibrary as closeMediaLibraryAction,
-} from 'Actions/mediaLibrary';
+} from '../../actions/mediaLibrary';
 import MediaLibraryModal from './MediaLibraryModal';
 
 /**

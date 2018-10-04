@@ -11,8 +11,7 @@
     "develop": "lerna run develop --parallel",
     "build": "npm run clean && lerna run build",
     "build-preview": "npm run build && lerna run build-preview",
-    "clean": "rimraf packages/*/dist dev-test/*.js",
-    "reset": "npm run clean && lerna clean --yes"
+    "clean": "rimraf packages/*/dist dev-test/*.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.54",

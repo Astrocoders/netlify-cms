@@ -6,10 +6,10 @@ import { ConnectedRouter } from 'react-router-redux';
 import history from 'Routing/history';
 import store from 'Redux';
 import { mergeConfig } from 'Actions/config';
-import { ErrorBoundary } from 'UI';
-import App from 'App/App';
-import 'EditorWidgets';
-import 'src/mediaLibrary';
+import { ErrorBoundary } from './components/UI';
+import App from './components/App/App';
+import './components/EditorWidgets';
+import './media/mediaLibrary';
 import 'what-input';
 
 const ROOT_ID = 'nc-root';

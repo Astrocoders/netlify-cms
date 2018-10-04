@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { css, injectGlobal, cx } from 'react-emotion';
 import reduxNotificationsStyles from 'redux-notifications/lib/styles.css';
-import { shadows, colors, lengths } from 'netlify-cms-ui-default';
+import { shadows, colors, lengths } from '../../ui';
 
 injectGlobal`
   ${reduxNotificationsStyles};

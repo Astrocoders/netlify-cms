@@ -13,9 +13,9 @@ import {
   components,
   buttons,
   lengths,
-} from 'netlify-cms-ui-default';
-import { status } from 'Constants/publishModes';
-import SettingsDropdown from 'UI/SettingsDropdown';
+} from '../../ui';
+import { status } from '../../constants/publishModes';
+import SettingsDropdown from '../UI/SettingsDropdown';
 
 const styles = {
   buttonMargin: css`

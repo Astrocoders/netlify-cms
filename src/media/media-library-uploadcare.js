@@ -1,4 +1,4 @@
-import { loadScript } from 'netlify-cms-lib-util';
+import { loadScript } from '../utils';
 
 /**
  * Default Uploadcare widget configuration, can be overriden via config.yml.

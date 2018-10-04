@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'react-emotion';
 import { isEmpty } from 'lodash';
-import { Modal } from 'UI';
+import { Modal } from '../UI';
 import MediaLibrarySearch from './MediaLibrarySearch';
 import MediaLibraryHeader from './MediaLibraryHeader';
 import MediaLibraryActions from './MediaLibraryActions';
 import MediaLibraryCardGrid from './MediaLibraryCardGrid';
 import EmptyMessage from './EmptyMessage';
-import { colors } from 'netlify-cms-ui-default';
+import { colors } from '../../ui';
 
 /**
  * Responsive styling needs to be overhauled. Current setup requires specifying
