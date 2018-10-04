@@ -1,7 +1,7 @@
-import CMS, { init } from './core';
-import './backends';
-import './widgets';
-import './editor-components';
-import './media-libraries';
+import CMS, { init } from './core'
+import './backends'
+import './widgets'
+import './editor'
+import './media'
 
-export { CMS as default, init };
+export { CMS as default, init }
