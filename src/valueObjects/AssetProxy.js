@@ -1,6 +1,6 @@
 import store from '../redux'
 import { resolvePath } from '../utils'
-import { currentBackend } from '../backends'
+import { currentBackend } from '../backend'
 import { getIntegrationProvider } from '../integrations'
 import { selectIntegration } from '../reducers'
 

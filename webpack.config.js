@@ -1,7 +1,7 @@
 const path = require('path')
 const webpack = require('webpack')
-const pkg = require('../package.json')
-const { getConfig, rules } = require('../scripts/webpack.js')
+const pkg = require('./package.json')
+const { getConfig, rules } = require('./scripts/webpack')
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -9,8 +9,7 @@ const baseConfig = getConfig()
 
 module.exports = {
   ...baseConfig,
-  context: path.join(__dirname, 'src'),
-  entry: ['./index.js'],
+  entry: ['./src/index.js'],
   module: {
     rules: [
       ...Object.entries(rules)

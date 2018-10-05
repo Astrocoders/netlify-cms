@@ -1,12 +1,12 @@
-import { fromJS } from 'immutable';
-import { Cursor } from '../ui';
-import { ENTRIES_SUCCESS } from '../actions/entries';
+import { fromJS } from 'immutable'
+import Cursor from '../utils/Cursor'
+import { ENTRIES_SUCCESS } from '../actions/entries'
 
 // Since pagination can be used for a variety of views (collections
 // and searches are the most common examples), we namespace cursors by
 // their type before storing them in the state.
 export const selectCollectionEntriesCursor = (state, collectionName) =>
-  new Cursor(state.getIn(['cursorsByType', 'collectionEntries', collectionName]));
+  new Cursor(state.getIn(['cursorsByType', 'collectionEntries', collectionName]))
 
 const cursors = (state = fromJS({ cursorsByType: { collectionEntries: {} } }), action) => {
   switch (action.type) {
@@ -14,12 +14,12 @@ const cursors = (state = fromJS({ cursorsByType: { collectionEntries: {} } }), a
       return state.setIn(
         ['cursorsByType', 'collectionEntries', action.payload.collection],
         Cursor.create(action.payload.cursor).store,
-      );
+      )
     }
 
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default cursors;
+export default cursors
