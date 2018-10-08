@@ -1,20 +1,25 @@
-const isProduction = process.env.NODE_ENV === 'production';
-const isTest = process.env.NODE_ENV === 'test';
+const isProduction = process.env.NODE_ENV === 'production'
+const isTest = process.env.NODE_ENV === 'test'
 
 const presets = () => {
-  if (isTest) {
-    return ['@babel/preset-react', '@babel/preset-env'];
-  }
   return [
-    '@babel/preset-react',
     [
       '@babel/preset-env',
       {
-        modules: false,
+        loose: true,
+        useBuiltIns: 'usage',
+        shippedProposals: true,
       },
     ],
-  ];
-};
+    [
+      '@babel/preset-react',
+      {
+        useBuiltIns: true,
+        pragma: 'React.createElement',
+      },
+    ],
+  ]
+}
 
 const plugins = () => {
   const defaultPlugins = [
@@ -25,14 +30,21 @@ const plugins = () => {
         globals: ['Error'],
       },
     ],
+    [
+      '@babel/plugin-transform-runtime',
+      {
+        helpers: true,
+        regenerator: true,
+      },
+    ],
     'transform-export-extensions',
     '@babel/plugin-proposal-class-properties',
     '@babel/plugin-proposal-object-rest-spread',
     '@babel/plugin-proposal-export-default-from',
-  ];
+  ]
 
   if (isProduction) {
-    return [...defaultPlugins, ['emotion', { hoist: true }]];
+    return [...defaultPlugins, ['emotion', { hoist: true }]]
   }
 
   if (isTest) {
@@ -53,7 +65,7 @@ const plugins = () => {
           autoLabel: true,
         },
       ],
-    ];
+    ]
   }
 
   return [
@@ -65,10 +77,10 @@ const plugins = () => {
         autoLabel: true,
       },
     ],
-  ];
-};
+  ]
+}
 
 module.exports = {
   presets: presets(),
   plugins: plugins(),
-};
+}
