@@ -1,13 +1,13 @@
 {
-  "name": "cms",
-  "description": "Make netlify-cms clean monolith again",
+  "name": "netlify-cms",
+  "description": "Make netlify-cms monolith again",
   "version": "1.0.0",
   "author": "Astrocoders <hello@astrocoders.com>",
   "private": true,
   "main": "dist/index.js",
   "scripts": {
     "watch": "webpack -w",
-    "build": "cross-env NODE_ENV=production webpack",
+    "build": "cross-env NODE_ENV=development webpack",
     "build-preview": "cross-env NODE_ENV=production webpack-dev-server --open",
     "develop": "webpack-dev-server --hot",
     "test": "run-s jest lint",
@@ -20,8 +20,10 @@
     "@babel/plugin-proposal-class-properties": "^7.0.0-beta.54",
     "@babel/plugin-proposal-export-default-from": "^7.0.0-beta.54",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.54",
+    "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-react": "^7.0.0-beta.54",
+    "@babel/runtime": "^7.1.2",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "babel-loader": "^8.0.4",
@@ -56,7 +58,8 @@
     "svg-inline-loader": "^0.8.0",
     "to-string-loader": "^1.1.5",
     "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.1.2",
+    "webpack-dev-server": "^3.1.9"
   },
   "dependencies": {
     "ajv": "^6.4.0",
@@ -95,6 +98,7 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.8",
     "react-scroll-sync": "^0.6.0",
+    "react-select": "^2.1.0",
     "react-sortable-hoc": "^0.6.8",
     "react-split-pane": "^0.1.82",
     "react-textarea-autosize": "^7.0.4",

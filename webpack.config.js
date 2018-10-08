@@ -1,7 +1,9 @@
 const path = require('path')
 const webpack = require('webpack')
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin')
+
 const pkg = require('./package.json')
-const { getConfig, rules } = require('./scripts/webpack')
+const { getConfig, rules, plugins } = require('./scripts/webpack')
 
 const isProduction = process.env.NODE_ENV === 'production'
 
@@ -33,10 +35,17 @@ module.exports = {
     ],
   },
   plugins: [
-    ...baseConfig.plugins,
+    ...Object.entries(plugins)
+      .filter(([key]) => key !== 'friendlyErrors')
+      .map(([, plugin]) => plugin()),
     new webpack.DefinePlugin({
       NETLIFY_CMS_VERSION: null,
       NETLIFY_CMS_CORE_VERSION: JSON.stringify(`${pkg.version}${isProduction ? '' : '-dev'}`),
+    }),
+    new FriendlyErrorsWebpackPlugin({
+      compilationSuccessInfo: {
+        messages: ['Netlify CMS is now running at http://localhost:8080'],
+      },
     }),
   ],
 }
