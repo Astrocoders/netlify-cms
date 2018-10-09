@@ -1,8 +1,8 @@
 {
-  "name": "netlify-cms",
+  "name": "@astrocoders/netlify-cms",
   "description": "Make netlify-cms monolith again",
   "version": "1.0.0",
-  "author": "Astrocoders <hello@astrocoders.com>",
+  "author": "Astrocoders <guilherme.decampo@astrocoders.com>",
   "private": true,
   "main": "dist/index.js",
   "scripts": {
