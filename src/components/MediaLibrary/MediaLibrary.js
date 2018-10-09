@@ -38,7 +38,7 @@ class MediaLibrary extends React.Component {
     loadMediaDisplayURL: PropTypes.func,
     displayURLs: ImmutablePropTypes.map,
     canInsert: PropTypes.bool,
-    files: PropTypes.arrayOf(PropTypes.shape(fileShape)).isRequired,
+    files: PropTypes.arrayOf(PropTypes.shape(fileShape)),
     dynamicSearch: PropTypes.bool,
     dynamicSearchActive: PropTypes.bool,
     forImage: PropTypes.bool,
